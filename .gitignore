@@ -1,0 +1,6 @@
+.stack-work/
+dist-newstyle/
+*.errors
+*.o
+*.hi
+xmonad-x86_64-linux
