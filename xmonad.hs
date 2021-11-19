@@ -5,20 +5,21 @@
 import XMonad
 
 -- Hooks
-import XMonad.Hooks.ManageHelpers ( doCenterFloat, isDialog )
-import XMonad.Hooks.EwmhDesktops ( ewmh, ewmhFullscreen )
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops ( ewmh, ewmhFullscreen )
+import XMonad.Hooks.ManageHelpers ( doCenterFloat, isDialog )
+import XMonad.Hooks.StatusBar (withEasySB, statusBarProp, StatusBarConfig)
 
 -- Layout
 import XMonad.Layout.Accordion ( Accordion(Accordion) )
 import XMonad.Layout.Magnifier ( magnifiercz )
 import XMonad.Layout.Renamed ( renamed, Rename(Replace, CutWordsLeft) )
-import XMonad.Layout.Spacing ( spacingRaw, Border(Border) )
 import XMonad.Layout.ResizableTile ( MirrorResize(MirrorExpand, MirrorShrink), ResizableTall(ResizableTall) )
+import XMonad.Layout.Spacing ( spacingRaw, Border(Border) )
 
 -- Running things
-import XMonad.Util.SpawnOnce ( spawnOnce )
 import XMonad.Util.EZConfig ( additionalKeysP )
+import XMonad.Util.SpawnOnce ( spawnOnce )
 
 -- Modifying windows
 import XMonad.Actions.RotSlaves ( rotAllDown, rotAllUp )
@@ -29,7 +30,6 @@ import Keybinds ( categoryTextFormat, unwrapCategories, KeyMapKey(..), KeyMapCat
 import Control.Monad ((>=>))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
-import XMonad.Hooks.StatusBar (withEasySB, statusBarProp, StatusBarConfig)
 
 myTerminal      = "kitty"
 myFocusFollowsMouse = True
