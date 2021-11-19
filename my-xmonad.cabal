@@ -16,7 +16,7 @@ executable my-xmonad
   hs-source-dirs:      lib
   build-depends:       base
                      , containers
-                     , xmonad >= 0.15
-                     , xmonad-contrib >= 0.15
+                     , xmonad >= 0.17
+                     , xmonad-contrib >= 0.17
   default-language:    Haskell2010
   ghc-options:         -Wall -Werror -threaded

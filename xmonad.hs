@@ -6,7 +6,7 @@ import XMonad
 
 -- Hooks
 import XMonad.Hooks.ManageHelpers ( doCenterFloat, isDialog )
-import XMonad.Hooks.EwmhDesktops ( ewmh, fullscreenEventHook )
+import XMonad.Hooks.EwmhDesktops ( ewmh, ewmhFullscreen )
 import XMonad.Hooks.DynamicLog
 
 -- Layout
@@ -29,6 +29,7 @@ import Keybinds ( categoryTextFormat, unwrapCategories, KeyMapKey(..), KeyMapCat
 import Control.Monad ((>=>))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+import XMonad.Hooks.StatusBar (withEasySB, statusBarProp, StatusBarConfig)
 
 myTerminal      = "kitty"
 myFocusFollowsMouse = True
@@ -227,13 +228,8 @@ myManageHook = composeAll
 ------------------------------------------------------------------------
 -- Event handling
 
--- * EwmhDesktops users should change this to ewmhDesktopsEventHook
---
--- Defines a custom handler function for X Events. The function should
--- return (All True) if the default handler is to be run afterwards. To
--- combine event hooks use mappend or mconcat from Data.Monoid.
---
-myEventHook = fullscreenEventHook
+-- Nothing for now.
+
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -307,9 +303,14 @@ myXmobarPP = def
 
 main :: IO ()
 main = xmonad
-     . ewmh
-   =<< statusBar "LANG=en_US.UTF-8 xmobar" myXmobarPP toggleStrutsKey defaults
+       . ewmhFullscreen
+       . ewmh
+       . withEasySB sbConfig toggleStrutsKey 
+       $ myConfig
   where
+    sbConfig :: StatusBarConfig
+    sbConfig = statusBarProp "LANG=en_US.UTF-8 xmobar" (pure myXmobarPP)
+
     toggleStrutsKey :: XConfig Layout -> (KeyMask, KeySym)
     toggleStrutsKey XConfig { modMask = m } = (m, xK_b)
 
@@ -319,7 +320,7 @@ main = xmonad
 --
 -- No need to modify this.
 --
-defaults = def {
+myConfig = def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -337,7 +338,6 @@ defaults = def {
       -- hooks, layouts
         layoutHook         = myLayout,
         manageHook         = myManageHook,
-        handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
     } `additionalKeysP` unwrapCategories myKeyMap
