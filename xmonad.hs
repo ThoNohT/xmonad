@@ -278,7 +278,7 @@ myStartupHook = do
     spawnOnce "xfce4-clipman &"
     spawnOnce "dropbox &"
     spawnOnce "keepassxc &"
-    spawnOnce "xbindkeys"
+    --spawnOnce "xbindkeys"
 
 
 ------------------------------------------------------------------------
