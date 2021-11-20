@@ -9,6 +9,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops ( ewmh, ewmhFullscreen )
 import XMonad.Hooks.ManageHelpers ( doCenterFloat, isDialog )
 import XMonad.Hooks.StatusBar (withEasySB, statusBarProp, StatusBarConfig)
+import XMonad.Hooks.WindowSwallowing ( swallowEventHook )
 
 -- Layout
 import XMonad.Layout.Accordion ( Accordion(Accordion) )
@@ -157,7 +158,7 @@ myKeyMap =
           (spawn "rofi -l 5 -modi \"power:~/.scripts/rofi/power-menu.sh\" -show power")
           "Power menu"
       , MkKey "M-q"
-          (spawn "xmonad --recompile; xmonad --restart")
+          (spawn "my-xmonad --recompile; my-xmonad --restart")
           "Restart xmonad"
       ]
     ]
@@ -228,7 +229,7 @@ myManageHook = composeAll
 ------------------------------------------------------------------------
 -- Event handling
 
--- Nothing for now.
+myHandleEventHook = swallowEventHook (className =? "Alacritty" <||> className =? "kitty") (return True)
 
 
 ------------------------------------------------------------------------
@@ -305,7 +306,7 @@ main :: IO ()
 main = xmonad
        . ewmhFullscreen
        . ewmh
-       . withEasySB sbConfig toggleStrutsKey 
+       . withEasySB sbConfig toggleStrutsKey
        $ myConfig
   where
     sbConfig :: StatusBarConfig
@@ -336,6 +337,7 @@ myConfig = def {
         mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
+        handleEventHook    = myHandleEventHook,
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         logHook            = myLogHook,
