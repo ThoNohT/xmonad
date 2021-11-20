@@ -28,6 +28,7 @@ import XMonad.Actions.WithAll ( killAll )
 
 -- Other imports
 import Keybinds ( categoryTextFormat, unwrapCategories, KeyMapKey(..), KeyMapCategory(MkCat) )
+import XMonad.Util.ClickableWorkspaces ( clickablePP )
 import Control.Monad ((>=>))
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -310,7 +311,7 @@ main = xmonad
        $ myConfig
   where
     sbConfig :: StatusBarConfig
-    sbConfig = statusBarProp "LANG=en_US.UTF-8 xmobar" (pure myXmobarPP)
+    sbConfig = statusBarProp "LANG=en_US.UTF-8 xmobar" (clickablePP myXmobarPP)
 
     toggleStrutsKey :: XConfig Layout -> (KeyMask, KeySym)
     toggleStrutsKey XConfig { modMask = m } = (m, xK_b)
